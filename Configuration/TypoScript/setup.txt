@@ -1,0 +1,387 @@
+
+/**
+ * lib.tx_adxgridelementstabs
+ */
+lib.tx_adxgridelementstabs {
+
+	rendering {
+
+		header = CASE
+		header {
+
+			key.data = register: flexformRenderingAjax
+
+			1 = TEXT
+			1 {
+
+				required = 1
+				field = header
+				htmlSpecialChars = 1
+
+				outerWrap = <span class="{$plugin.tx_adxgridelementstabs.cssClassPrefix}header"> | </span>
+				outerWrap.insertData = 1
+
+				typolink.parameter.data = TSFE: id
+				typolink.parameter.if.isFalse.data = register: linkIsSet
+				typolink.additionalParams = &type={$plugin.tx_adxgridelementstabs.ajaxPageTypeNum}&tx_adxgridelementstabs[uid]={field: uid}
+				typolink.additionalParams.insertData = 1
+
+				append = LOAD_REGISTER
+				append.linkIsSet = 1
+			}
+
+			default < .1
+			default {
+				typolink >
+				typolink.parameter.dataWrap = #c{field: uid}
+				typolink.parameter.if.isFalse.data = register: linkIsSet
+			}
+		}
+
+		headerFallback < .header
+		headerFallback {
+			1.field = header // subheader
+			default.field = header // subheader
+		}
+
+		subheader < .header
+		subheader {
+
+			1.field = subheader
+			1.outerWrap = <span class="{$plugin.tx_adxgridelementstabs.cssClassPrefix}subheader"> | </span>
+
+			default.field = subheader
+			default.outerWrap = <span class="{$plugin.tx_adxgridelementstabs.cssClassPrefix}subheader"> | </span>
+		}
+
+		subheaderFallback < .subheader
+		subheaderFallback {
+			1.field = subheader // header
+			default.field = subheader // header
+		}
+
+		text < .header
+		text {
+
+			1.field = bodytext
+			1.parseFunc =< lib.parseFunc_RTE
+			1.outerWrap = <span class="{$plugin.tx_adxgridelementstabs.cssClassPrefix}text"> | </span>
+
+			default.field = bodytext
+			default.parseFunc =< lib.parseFunc_RTE
+			default.outerWrap = <span class="{$plugin.tx_adxgridelementstabs.cssClassPrefix}text"> | </span>
+		}
+
+		image =< tt_content.image.20
+		image {
+
+			stdWrap.required = 1
+			stdWrap.wrap = <span class="{$plugin.tx_adxgridelementstabs.cssClassPrefix}image"> | </span>
+
+			1.imageLinkWrap {
+
+				enable >
+				enable = 1
+				enable.if.isFalse.data = register: linkIsSet
+
+				typolink >
+				typolink.parameter.dataWrap = #c{field: uid}
+			}
+		}
+
+		imageBackground = LOAD_REGISTER
+		imageBackground {
+
+			imageBackgroundStyle.cObject = IMG_RESOURCE
+			imageBackgroundStyle.cObject {
+
+				file {
+
+					import = uploads/pics/
+					import.field = image
+					import.listNum = 0
+
+					width.field = imagewidth
+				}
+
+				stdWrap.required = 1
+				stdWrap.noTrimWrap = | style="background-image: url('|'); background-repeat: no-repeat;"|
+			}
+		}
+
+		default = TEXT
+		default.current = 1
+	}
+}
+
+
+/**
+ * plugin.tx_gridelements_pi1.setup.tx_adxgridelementstabs
+ */
+plugin.tx_gridelements_pi1.setup.tx_adxgridelementstabs {
+
+	wrap.cObject = TEXT
+	wrap.cObject.value = <div{register: containerAttributes}>{register: tabItemContent} | </div>
+	wrap.cObject.insertData	= 1
+
+	columns.0 {
+
+		renderObj  =< tt_content
+		renderObj.if.isFalse.field = parentgrid_flexform_ajax
+
+		preCObject = COA
+		preCObject {
+
+			10 = LOAD_REGISTER
+			10 {
+
+				containerClasses.cObject = COA
+				containerClasses.cObject {
+
+					10 = TEXT
+					10 {
+
+						value = {$plugin.tx_adxgridelementstabs.container.classes}
+						required = 1
+
+						replacement.10.search = /([^\s]+)/
+						replacement.10.replace = {$plugin.tx_adxgridelementstabs.cssClassPrefix}$1
+						replacement.10.useRegExp = 1
+
+						noTrimWrap = || |
+					}
+
+					20 = TEXT
+					20 {
+						field = flexform_layout
+						required = 1
+					}
+
+					stdWrap.insertData = 1
+					stdWrap.trim = 1
+				}
+
+				containerStyles.cObject = COA
+				containerStyles.cObject {
+
+					10 = TEXT
+					10 {
+						value = {$plugin.tx_adxgridelementsflexslider.container.styles}
+						insertData = 1
+					}
+
+					20 = TEXT
+					20 {
+						fieldRequired = flexform_height
+						field = flexform_height
+						wrap = height:|px;
+					}
+				}
+
+				containerAttributes.cObject = COA
+				containerAttributes.cObject {
+
+					10 = TEXT
+					10 {
+						data = register: containerClasses
+						required = 1
+						noTrimWrap = | class="|"|
+					}
+
+					20 = TEXT
+					20 {
+						data = register: containerStyles
+						required = 1
+						noTrimWrap = | style="|"|
+					}
+				}
+
+				containerSelector.cObject = COA
+				containerSelector.cObject {
+
+					10 = TEXT
+					10 {
+						field = uid
+						noTrimWrap = |#c| |
+					}
+
+					20 = TEXT
+					20 {
+						data = register: containerClasses
+						replacement.10.search = /\s+/
+						replacement.10.replace = .
+						replacement.10.useRegExp = 1
+						wrap = .|
+					}
+				}
+
+				jsInline1323697386.cObject = COA
+				jsInline1323697386.cObject {
+
+					wrap = (function($){ $(document).ready(function(){ | }); })(jQuery);
+
+					# remove prefixed anchors
+					10 = CASE
+					10 {
+
+						key.field = flexform_ajax
+
+						1 = TEXT
+						1 {
+						}
+
+						default = TEXT
+						default.data = register: containerSelector
+						default.noTrimWrap = |if ($('base')[0]){ $('| .{$plugin.tx_adxgridelementstabs.cssClassPrefix}pagination a[href*=#c]').each(function(index, element){ $(element).attr('href', '#' + $(element).attr('href').split('#')[1]); }); }|
+					}
+
+					20 = TEXT
+					20.data = register: jsInline1323697386
+
+					30 = TEXT
+					30.data = register: containerSelector
+					30.wrap = $(' | ')
+
+					40 = COA
+					40 {
+
+						wrap = .tabs({ | });
+
+#						5 = TEXT
+#						5.value = select: function(event, ui){ var url = $.data(ui.tab, 'load.tabs'); if (url){ return false; } return true; },
+
+						10 = TEXT
+						10.fieldRequired = flexform_disabled
+						10.value = disabled: true,
+
+						15 = TEXT
+						15.fieldRequired = flexform_height
+						15.value = fillSpace: true,
+
+						20 = TEXT
+						20.fieldRequired = flexform_selected
+						20.dataWrap = selected: {field: flexform_selected},
+
+						25 = TEXT
+						25.fieldRequired = flexform_fx
+						25.dataWrap = animated: '{field: flexform_fx}',
+
+						30 = TEXT
+						30.if.isFalse.field = flexform_animated
+						30.value = animated: false,
+
+						35 = TEXT
+						35.fieldRequired = flexform_event
+						35.dataWrap = event: '{field: flexform_event}',
+
+						40 = TEXT
+						40.fieldRequired = flexform_deselectable
+						40.value = deselectable: true,
+
+						45 = TEXT
+						45.fieldRequired = flexform_collapsible
+						45.value = collapsible: true,
+
+						50 = TEXT
+						50.fieldRequired = flexform_ajax
+						50.value = ajaxOptions: { error: function(xhr, status, index, anchor) { $( anchor.hash ).html('Loading faild.'); } },
+
+						55 = TEXT
+						55.fieldRequired = flexform_cookie
+						55.field = uid
+						55.wrap = cookie: { name: 'tx_adxgridelementstabs_uid | ' },
+
+						# User defined options
+						60 = TEXT
+						60.fieldRequired = flexform_options
+						60.dataWrap = {field: flexform_options},
+
+						65 = TEXT
+						65.dataWrap = 'null': null
+					}
+				}
+
+				flexformRenderingFields.field = flexform_fields
+				flexformRenderingAjax.field = flexform_ajax
+
+				tabItemContent.cObject = CONTENT
+				tabItemContent.cObject {
+
+					wrap = <ul class="{$plugin.tx_adxgridelementstabs.cssClassPrefix}pagination"> | </ul>
+
+					table = tt_content
+
+					select {
+
+						languageField = sys_language_uid
+
+						andWhere = tx_gridelements_container = {field: uid} AND tx_gridelements_columns = 0
+						andWhere.insertData = 1
+
+						orderBy = tx_gridelements_columns ASC, sorting ASC
+					}
+
+					renderObj = TEXT
+					renderObj {
+
+						outerWrap = <li class="{$plugin.tx_adxgridelementstabs.cssClassPrefix}listItemWrap"{register: imageBackgroundStyle}> | </li>
+						outerWrap.insertData = 1
+
+						data = register: flexformRenderingFields
+
+						split {
+
+							token = ,
+							cObjNum = 1
+
+							1.10 = CASE
+							1.10 < lib.tx_adxgridelementstabs.rendering
+							1.10 {
+								if.isTrue.current = 1
+								key.current = 1
+								key.trim = 1
+							}
+						}
+
+						append = LOAD_REGISTER
+						append.linkIsSet = 0
+					}
+				}
+			}
+		}
+
+		includeFrontEndResources {
+
+			includeCSS.1323697386 = {$plugin.tx_adxgridelementstabs.theme}
+
+			jsInline.1323697386 = TEXT
+			jsInline.1323697386 {
+				forceParse = 1
+				data = register: jsInline1323697386
+			}
+		}
+	}
+}
+
+tx_adxgridelementstabs_ajax = PAGE
+tx_adxgridelementstabs_ajax {
+
+	typeNum = {$plugin.tx_adxgridelementstabs.ajaxPageTypeNum}
+
+	config {
+		admPanel = 0
+		disableAllHeaderCode = 1 
+		disableCharsetHeader = 1
+		disablePrefixComment = 1
+	}
+
+	10 = CONTENT
+	10 {
+		table = tt_content
+
+		select {
+			uidInList.data = GP: tx_adxgridelementstabs|uid
+			languageField = sys_language_uid
+		}
+	}
+}

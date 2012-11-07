@@ -1,0 +1,20 @@
+
+/**
+ * plugin.tx_adxgridelementstabs
+ */
+plugin.tx_adxgridelementstabs {
+
+	theme = EXT:adx_gridelements_tabs/Resources/Public/CSS/smoothness/jquery-ui-1.8.18.custom.css
+
+	cssClassPrefix = tx-adgridelementtabs-
+
+	container {
+
+		styles = 
+
+		# Additional class names. cssClassPrefix is added automatically. Required one class!
+		classes = container
+	}
+
+	ajaxPageTypeNum = 1349265091
+}

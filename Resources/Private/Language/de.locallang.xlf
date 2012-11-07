@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2012-06-13T20:22:32Z" product-name="adx_gridelements_accordion">
+		<header/>
+		<body>
+			<trans-unit id="title" xml:space="preserve">
+				<source>Tabs</source>
+				<target state="translated">Tabs</target>
+			</trans-unit>
+			<trans-unit id="description" xml:space="preserve">
+				<source>Tabs for content elements.</source>
+				<target state="translated">Tabs für Seiteninhalte.</target>
+			</trans-unit>
+			<trans-unit id="columnName.0" xml:space="preserve">
+				<source>Tab elements</source>
+				<target state="translated">Tab-Elemente</target>
+			</trans-unit>
+			<trans-unit id="flexform.sheet.general" xml:space="preserve">
+				<source>General</source>
+				<target state="translated">Allgemein</target>
+			</trans-unit>
+			<trans-unit id="flexform.layout" xml:space="preserve">
+				<source>Layout</source>
+				<target state="translated">Layout</target>
+			</trans-unit>
+			<trans-unit id="flexform.headlineType" xml:space="preserve">
+				<source>Headline Type</source>
+				<target state="translated">Überschriftentyp</target>
+			</trans-unit>
+			<trans-unit id="flexform.height" xml:space="preserve">
+				<source>Height</source>
+				<target state="translated">Höhe</target>
+			</trans-unit>
+			<trans-unit id="flexform.selected" xml:space="preserve">
+				<source>Selected</source>
+				<target state="translated">Selektiert</target>
+			</trans-unit>
+			<trans-unit id="flexform.sheet.rendering" xml:space="preserve">
+				<source>Rendering</source>
+				<target state="translated">Rendering</target>
+			</trans-unit>
+			<trans-unit id="flexform.fields" xml:space="preserve">
+				<source>Render fields for list items</source>
+				<target state="translated">Render-Felder für Listelemente</target>
+			</trans-unit>
+			<trans-unit id="flexform.fields.header" xml:space="preserve">
+				<source>Header</source>
+				<target state="translated">Überschrift</target>
+			</trans-unit>
+			<trans-unit id="flexform.fields.headerFallback" xml:space="preserve">
+				<source>Header, subheader fallback</source>
+				<target state="translated">Überschrift, Unterüberschrift-Fallback</target>
+			</trans-unit>
+			<trans-unit id="flexform.fields.subheader" xml:space="preserve">
+				<source>Subheader</source>
+				<target state="translated">Unterüberschrift</target>
+			</trans-unit>
+			<trans-unit id="flexform.fields.subheaderFallback" xml:space="preserve">
+				<source>Subheader, header fallback</source>
+				<target state="translated">Unterüberschrift, Überschrift-Fallback</target>
+			</trans-unit>
+			<trans-unit id="flexform.fields.text" xml:space="preserve">
+				<source>Bodytext</source>
+				<target state="translated">Text</target>
+			</trans-unit>
+			<trans-unit id="flexform.fields.image" xml:space="preserve">
+				<source>Images</source>
+				<target state="translated">Bilder</target>
+			</trans-unit>
+			<trans-unit id="flexform.fields.imageBackground" xml:space="preserve">
+				<source>Image as background style</source>
+				<target state="translated">Bild als Hintergrundstil</target>
+			</trans-unit>
+			<trans-unit id="flexform.ajax" xml:space="preserve">
+				<source>Load content elements with AJAX</source>
+				<target state="translated">Lade Inhaltselemente mit AJAX</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
